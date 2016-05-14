@@ -25,10 +25,21 @@ if (Meteor.isServer) {
   }
 
   Meteor.publish('school', function () {
+      // Projection operator
       var school = School.find({}, { students: { $elemMatch: { school: 102 } } });
-
-      // Returns All Students instead of only the $elemMatch { school: 102 }
+      console.log('Project Operator');
       console.log(school.fetch()[0].students);
+
+      // Query operator
+      var school2 = School.find({ students: { $elemMatch: { school: 102 } } });
+      console.log('Query Operator');
+      console.log(school2.fetch()[0].students);
+
+      // Fields
+      var school3 = School.find({}, { fields: { students: { $elemMatch: { school: 102 } } } });
+      console.log('Fields Operator');
+      console.log(school3.fetch()[0].students);
+      // Returns All Students instead of only the $elemMatch { school: 102 }
 
       // Running the same query in Meteor Mongo returns only ONE student:
       // QUERY:   db.school.find({}, { students: { $elemMatch: { school: 102 } } })
